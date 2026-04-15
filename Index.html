@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Urban Pulse — Pre-Workshop</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,300;9..144,600&family=DM+Sans:wght@300;400;500&display=swap');
+:root{
+  --ink:#0d1117;--muted:#57606a;--border:#d0d7de;
+  --bg:#f6f8fa;--white:#ffffff;--accent:#1d4ed8;--accent-light:#eff6ff;
+  --green:#15803d;--green-light:#f0fdf4;--amber:#b45309;--amber-light:#fffbeb;
+  --purple:#7c3aed;--purple-light:#f5f3ff;--teal:#0f766e;--red:#b91c1c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+#site-header{background:var(--ink);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid #30363d}
+.logo{font-family:'Fraunces',Georgia,serif;font-size:17px;color:white}
+.logo span{color:#60a5fa}
+.progress-wrap{display:flex;align-items:center;gap:10px}
+.prog-label{font-family:'DM Mono',monospace;font-size:11px;color:#8b949e}
+.prog-bar{width:180px;height:4px;background:#30363d;border-radius:2px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:2px;transition:width 0.5s}
+#step-ctr{font-family:'DM Mono',monospace;font-size:11px;color:#8b949e;min-width:44px;text-align:right}
+#app{flex:1;display:flex;flex-direction:column;max-width:1060px;margin:0 auto;width:100%;padding:28px 20px}
+
+/* INTRO */
+#intro{display:flex;flex-direction:column;align-items:center;text-align:center;padding:56px 20px;gap:22px}
+.eyebrow{font-family:'DM Mono',monospace;font-size:11px;color:var(--accent);letter-spacing:2px;text-transform:uppercase}
+.big-title{font-family:'Fraunces',Georgia,serif;font-size:40px;line-height:1.1;color:var(--ink);max-width:620px}
+.big-title em{color:var(--accent);font-style:normal}
+.body-text{font-size:14px;color:var(--muted);max-width:520px;line-height:1.8}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:480px;width:100%}
+.stat{background:white;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center}
+.stat .n{font-family:'Fraunces',Georgia,serif;font-size:26px;color:var(--accent)}
+.stat .l{font-size:11px;color:var(--muted);margin-top:2px}
+.session-input{padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'DM Sans',system-ui,sans-serif;background:white;color:var(--ink);outline:none;transition:border-color 0.2s;width:280px;text-align:center}
+.session-input:focus{border-color:var(--accent)}
+.session-label{font-size:12px;color:var(--muted)}
+.btn-go{background:var(--ink);color:white;border:none;padding:13px 34px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',system-ui,sans-serif;display:inline-flex;align-items:center;gap:8px}
+.btn-go:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-go:active{transform:translateY(0)}
+
+/* STRATEGY */
+#strategy{display:none;flex-direction:column;gap:20px}
+.strat-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.strat-left{display:flex;flex-direction:column;gap:6px}
+.strat-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sid{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);background:var(--bg);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
+.tpill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px}
+.tbeh{background:var(--purple-light);color:var(--purple)}
+.tspa{background:var(--amber-light);color:var(--amber)}
+.tinf{background:var(--green-light);color:var(--green)}
+.sname{font-family:'Fraunces',Georgia,serif;font-size:30px;color:var(--ink);line-height:1.15}
+.sgrp{font-size:11px;color:var(--muted)}
+.selbadge{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);background:var(--green-light);padding:5px 12px;border-radius:20px;border:1px solid #bbf7d0;white-space:nowrap;align-self:flex-start;margin-top:4px}
+.sdesc{font-size:13px;color:var(--muted);line-height:1.75;background:white;border:1px solid var(--border);border-radius:10px;padding:14px 18px}
+.shint{font-size:12px;color:var(--accent);background:var(--accent-light);border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;display:flex;gap:8px;align-items:flex-start}
+.vars-lbl{font-size:12px;color:var(--muted);font-style:italic}
+#clusters{display:flex;flex-direction:column;gap:8px}
+.cluster{background:white;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.clhead{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;user-select:none;transition:background 0.15s}
+.clhead:hover{background:var(--bg)}
+.cldot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.cllabel{font-size:12px;font-weight:500;color:var(--ink)}
+.clsel{font-family:'DM Mono',monospace;font-size:10px;color:var(--green);margin-left:6px}
+.clcount{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-left:auto}
+.clarrow{color:var(--muted);font-size:11px;margin-left:6px;transition:transform 0.2s;display:inline-block}
+.clarrow.open{transform:rotate(180deg)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px 12px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:20px;font-size:11px;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);transition:all 0.15s;user-select:none;line-height:1.4}
+.chip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.chip.sel{border-color:var(--accent);background:var(--accent);color:white}
+.chk{font-size:9px;display:none}
+.chip.sel .chk{display:inline}
+.nav{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border)}
+.btn-n{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',system-ui,sans-serif;border:1px solid var(--border);background:white;color:var(--ink)}
+.btn-n:hover{background:var(--bg)}
+.btn-n:active{transform:scale(0.98)}
+.btn-n.pri{background:var(--ink);color:white;border-color:var(--ink)}
+.btn-n.pri:hover{background:var(--accent);border-color:var(--accent)}
+.skip{font-size:11px;color:var(--muted);cursor:pointer;text-decoration:underline}
+.skip:hover{color:var(--ink)}
+
+/* RESULTS */
+#results{display:none;flex-direction:column;align-items:center;gap:22px;padding:36px 0;text-align:center}
+.res-title{font-family:'Fraunces',Georgia,serif;font-size:34px;color:var(--ink)}
+.res-sub{font-size:14px;color:var(--muted);max-width:500px;line-height:1.75}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:680px;text-align:left}
+.rc{background:white;border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.rc-name{font-size:11px;font-weight:500;color:#24292f;margin-bottom:3px}
+.rc-n{font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--accent)}
+.rc-tag{font-size:9px;color:var(--muted);margin-top:2px;line-height:1.4}
+.submit-block{background:white;border:2px solid var(--accent);border-radius:14px;padding:28px 32px;max-width:520px;width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
+.submit-icon{font-size:40px}
+.submit-title{font-family:'Fraunces',Georgia,serif;font-size:22px;color:var(--ink)}
+.submit-body{font-size:13px;color:var(--muted);line-height:1.7;text-align:center;max-width:380px}
+.btn-submit{background:var(--accent);color:white;border:none;padding:14px 36px;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;transition:all 0.2s;font-family:'DM Sans',system-ui,sans-serif;display:inline-flex;align-items:center;gap:10px;text-decoration:none;width:100%;justify-content:center}
+.btn-submit:hover{background:#1e40af;transform:translateY(-1px)}
+.btn-submit:active{transform:translateY(0)}
+.submit-note{font-size:11px;color:var(--muted)}
+.sending{display:none;font-size:13px;color:var(--green);font-family:'DM Mono',monospace}
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="logo">Urban<span>Pulse</span></div>
+  <div class="progress-wrap">
+    <span class="prog-label">Progress</span>
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <span id="step-ctr">0 / 18</span>
+  </div>
+</header>
+
+<div id="app">
+
+<!-- INTRO -->
+<div id="intro">
+  <div class="eyebrow">Pre-Workshop Activity</div>
+  <h1 class="big-title">Map strategies to <em>urban variables</em></h1>
+  <p class="body-text">Before the Urban Pulse workshop, explore 18 urban strategies and select which urban system variables you think each one would affect. No right or wrong answers — we want your mental model <em>before</em> the game.</p>
+  <div class="stats">
+    <div class="stat"><div class="n">18</div><div class="l">Strategies</div></div>
+    <div class="stat"><div class="n">50</div><div class="l">Variables</div></div>
+    <div class="stat"><div class="n">~15'</div><div class="l">Minutes</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
+    <label class="session-label">Enter the session code given by your facilitator</label>
+    <input class="session-input" id="inp-session" placeholder="e.g. UA-2025-01" type="text">
+  </div>
+  <button class="btn-go" id="btn-start">Begin activity &nbsp;→</button>
+</div>
+
+<!-- STRATEGY -->
+<div id="strategy">
+  <div class="strat-top">
+    <div class="strat-left">
+      <div class="strat-meta">
+        <span class="sid" id="s-id">S01</span>
+        <span class="tpill" id="s-type">Behavioral</span>
+        <span class="sgrp" id="s-grp"></span>
+      </div>
+      <h2 class="sname" id="s-name"></h2>
+    </div>
+    <div class="selbadge" id="sel-badge">0 selected</div>
+  </div>
+  <div class="sdesc" id="s-desc"></div>
+  <div class="shint">
+    <span style="flex-shrink:0;margin-top:1px">💡</span>
+    <span id="s-hint"></span>
+  </div>
+  <p class="vars-lbl">Click chips to select variables you believe this strategy affects. Click a group header to expand or collapse it.</p>
+  <div id="clusters"></div>
+  <div class="nav">
+    <button class="btn-n" id="btn-back">← Previous</button>
+    <span class="skip" id="btn-skip">Skip →</span>
+    <button class="btn-n pri" id="btn-next">Next strategy →</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div id="results">
+  <div class="res-title">Activity complete ✓</div>
+  <p class="res-sub">Your selections are ready. Click the button below to submit directly — one click sends everything to the research team.</p>
+  <div class="res-grid" id="res-grid"></div>
+  <div class="submit-block">
+    <div class="submit-icon">📬</div>
+    <div class="submit-title">Send your responses</div>
+    <p class="submit-body">Your responses are encoded and ready to submit. Click the button — a pre-filled form will open with everything already filled in. Just click <strong>Submit</strong> on that page.</p>
+    <a class="btn-submit" id="btn-submit-final" href="#" target="_blank">
+      Submit my responses →
+    </a>
+    <p class="submit-note">Opens Google Form with your data pre-filled. One click to confirm.</p>
+    <div class="sending" id="sending-msg">✓ Opening submission form...</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// CONFIGURATION — replace these three values after running
+// the Apps Script in script.google.com
+// ============================================================
+const FORM_BASE_URL   = "https://docs.google.com/forms/d/e/1FAIpQLSc6SIm-EAAPabA2P643jMuh_DtrYTijiuEvnGTCsSWJdJ1Yng/viewform";     // e.g. https://docs.google.com/forms/d/e/XXXXX/viewform
+const ENTRY_SESSION   = "entry.2028201708";     // e.g. entry.123456789
+const ENTRY_RESPONSE  = "entry.2044414682";    // e.g. entry.987654321
+// ============================================================
+
+const CLUSTERS=[
+  {id:'gov',label:'Governance & Planning',color:'#7c3aed',vars:[
+    'Planning & management mindset / development attitudes',
+    'Infrastructure growth and maintenance'
+  ]},
+  {id:'form',label:'Urban Form & Land Use',color:'#b45309',vars:[
+    'Physical circumstances of urban street network',
+    'Building density',
+    'Low density / sprawl growth',
+    'High-density mixed land use / activities',
+    'Mid-rise buildings & integrated land use',
+    'Land use distribution (rate of mixed-use zoning)',
+    'Fragmented rate of urban form (car-dependent mobility)'
+  ]},
+  {id:'green',label:'Green & Public Space',color:'#15803d',vars:[
+    'Balanced allocation of green/public spaces',
+    'Landscape patterns',
+    'Green and open spaces (area or accessibility)',
+    'Public spaces (area or accessibility)',
+    'Integration rate of public/green space with other land uses',
+    'Spatial integration rate of public spaces'
+  ]},
+  {id:'mob',label:'Mobility & Accessibility',color:'#0f766e',vars:[
+    'Pedestrian-friendly street networks (availability level)',
+    'Cycling route',
+    'Spatial active mobility infrastructure',
+    'Walking ways',
+    'Desire to cycling / scooter',
+    'Desire to walking',
+    'Level of active mobility usage',
+    'Active mobility tendency and usage',
+    'Motorized transport usage (traffic congestion effect)'
+  ]},
+  {id:'soc',label:'Social & Economic',color:'#1d4ed8',vars:[
+    'Social vitality',
+    'Recreational and social advantages rate',
+    'Gender social engagement preferences',
+    'Local economic activities',
+    'Active attendance level in open/public spaces',
+    'Social vitality (impact on community experience)'
+  ]},
+  {id:'env',label:'Environmental Quality',color:'#0891b2',vars:[
+    'Airflow freedom',
+    'Atmospheric diffusion capability',
+    'Carbon sequestration rate',
+    'Evapotranspiration and albedo effects',
+    'Air purification rate',
+    'NOx/PM concentration',
+    'Air quality level',
+    'Soundscape quality level',
+    'Local microclimate positive change',
+    'Heat retention rate',
+    'Urban heat stress'
+  ]},
+  {id:'exp',label:'Health & Exposure',color:'#b91c1c',vars:[
+    'Exposure rate to air pollution',
+    'Exposure possibility to air pollution',
+    'Exposure possibility to noise',
+    'Exposure rate to noise'
+  ]}
+];
+
+const ALL_VARS=CLUSTERS.flatMap(c=>c.vars);
+
+const STRATEGIES=[
+  {id:'S01',name:'Neighborhood Watch',type:'Behavioral',group:'Community Representative',
+   desc:'A community-based safety and surveillance program that builds collective responsibility among residents, increasing perceived safety and encouraging people to spend more time in outdoor spaces. The program strengthens social bonds and trust between neighbors over time.',
+   hint:'Think about what happens to outdoor behavior, social cohesion, and sense of safety when residents actively monitor and engage with shared spaces.'},
+  {id:'S02',name:'Community Festival',type:'Behavioral',group:'Community Representative',
+   desc:'A recurring community event held in public spaces that activates outdoor life and builds social capital. Festivals bring together residents from different backgrounds, temporarily transforming underused spaces into vibrant community hubs.',
+   hint:'Consider the effects of programmed activity on public space use, social interaction, local economy, and soundscape conditions.'},
+  {id:'S03',name:'Community Gardens',type:'Behavioral',group:'Community Representative / Environmental Advocate',
+   desc:'Shared urban growing spaces established and maintained by community members. Community gardens combine social interaction with direct environmental function — introducing vegetation into urban fabric and improving local air and microclimate conditions.',
+   hint:'Community gardens work on multiple systems at once. Think about social, ecological, and microclimate dimensions simultaneously.'},
+  {id:'S04',name:'Cultural Hub',type:'Behavioral',group:'Social Catalyst',
+   desc:'A dedicated community facility offering cultural programming, creative activities, and social services. Cultural hubs function as third places — spaces outside home and work where social interaction occurs organically — attracting diverse groups and generating sustained pedestrian activity.',
+   hint:'Think about how a permanent cultural facility affects social diversity, local economy, pedestrian flows, and long-term vitality of surrounding spaces.'},
+  {id:'S05',name:'Participatory Planning',type:'Behavioral',group:'Urban Planner',
+   desc:'A governance process that involves residents directly in urban planning and design decisions. Participatory planning shifts the institutional culture of development by building community ownership of public spaces and generating social capital.',
+   hint:'Consider how changing who makes planning decisions affects institutional mindset, community trust, public space use, and long-term outcomes.'},
+  {id:'S06',name:'Walking Groups',type:'Behavioral',group:'Mobility Specialist',
+   desc:'Organized community walking programs that encourage residents to explore their neighborhood on foot together. Walking groups increase physical activity and social connection — but also raise participant exposure to urban air and noise pollution along routes.',
+   hint:'This strategy has both positive and potentially negative effects. Consider the mobility benefits AND the exposure consequences of walking near traffic.'},
+  {id:'S07',name:'Residential Swap',type:'Spatial',group:'Urban Planner / Social Catalyst / Developer',
+   desc:'A spatial planning intervention that redistributes residential land use across city zones to achieve better neighborhood balance, reduce fragmentation, and promote compact urban form. Shifting where people live changes mobility patterns, building density, and spatial structure.',
+   hint:'Think about the downstream effects of changing residential density distribution: who walks, who drives, what gets built, and how the street network is used.'},
+  {id:'S08',name:'Swap Res-Commercial',type:'Spatial',group:'Developer',
+   desc:'A land use conversion that transforms residential zones into mixed residential-commercial areas, activating ground-floor economic functions alongside housing. Introduces mixed primary uses into mono-functional areas, generating pedestrian activity and local economic diversity.',
+   hint:'Consider what happens to street life, economic activity, social vitality, and mobility patterns when daily needs are co-located with housing.'},
+  {id:'S09',name:'Park Placement',type:'Spatial',group:'Urban Planner / Environmental Advocate',
+   desc:'A spatial intervention that repositions or creates park space adjacent to residential areas to maximise accessibility. The strategic placement of parks determines whether green space actually generates outdoor activity, social interaction, and environmental co-benefits.',
+   hint:'Location matters as much as size. Think about how proximity to population affects actual use, social behavior, air quality, and microclimate effects.'},
+  {id:'S10',name:'Productive Development',type:'Spatial',group:'Developer',
+   desc:'Replacement of vacant or speculative land with productive mixed-use development combining workspace, services, and public functions. Productive development diversifies local economic activity and counters mono-functional sprawl, requiring a shift in planning mindset.',
+   hint:'Think about how introducing economic production functions into urban fabric affects land use diversity, planning culture, local economy, and social vitality.'},
+  {id:'S11',name:'Slum Upgrade',type:'Infrastructure',group:'Social Catalyst',
+   desc:'Formalization and physical improvement of informal settlements through investment in street networks, drainage, housing quality, and pedestrian access. Upgrading addresses the physical fragmentation and exposure risks of informal urban fabric across mobility, health, and environmental quality.',
+   hint:'Informal settlement upgrading is a multi-domain intervention. Consider physical, social, environmental, and health dimensions simultaneously.'},
+  {id:'S12',name:'Green Infrastructure',type:'Infrastructure',group:'Urban Planner / Environmental Advocate',
+   desc:'Installation of urban green infrastructure including trees, vegetation corridors, green roofs, and permeable surfaces. Green infrastructure produces the widest range of co-benefits of any built intervention — from heat reduction and air quality to noise attenuation and social space quality.',
+   hint:'This is the broadest-impact strategy. Think across all urban system domains: air, heat, noise, water, carbon, social, and aesthetic quality.'},
+  {id:'S13',name:'Air Filtration',type:'Infrastructure',group:'Urban Planner / Developer',
+   desc:'Technical installation of air filtration systems designed to reduce ambient concentrations of particulate matter (PM2.5/PM10) and nitrogen oxides (NOx) in targeted urban zones. Air filtration directly intervenes in the environmental state of the urban atmosphere.',
+   hint:'Focus on the chain from reduced pollutant concentration to health exposure to behavioral change — what happens when air quality improves in a specific zone?'},
+  {id:'S14',name:'Pollution Reduction',type:'Infrastructure',group:'Environmental Advocate',
+   desc:'Relocation or mitigation of pollution sources — primarily industrial land uses — away from residential areas. Source reduction is the most effective intervention for decreasing ambient pollutant concentrations, directly modifying the spatial relationship between emission sources and exposed populations.',
+   hint:'Think about what changes when the source of pollution is removed or moved: concentration, exposure, health, outdoor activity, and motorized traffic patterns.'},
+  {id:'S15',name:'Solar Energy Grid',type:'Infrastructure',group:'Environmental Advocate',
+   desc:'Installation of distributed renewable energy infrastructure to substitute fossil-fuel-based electricity and heating in the district. Renewable energy substitution eliminates combustion-based NOx and PM emissions from energy generation, producing air quality co-benefits alongside energy independence.',
+   hint:'Consider the chain: renewable energy → reduced combustion → reduced emissions → improved air quality → what comes next for outdoor activity and health?'},
+  {id:'S16',name:'Eco-District',type:'Infrastructure',group:'Urban Planner / Developer',
+   desc:'Comprehensive integrated neighborhood development combining energy systems, green infrastructure, mobility networks, and social infrastructure in a coordinated intervention at district scale. Eco-districts are the highest-investment, highest-impact strategy in the game.',
+   hint:'The eco-district touches every urban system. Think expansively — energy, green space, mobility, air quality, social vitality, governance, and microclimate all interact here.'},
+  {id:'S17',name:'Transit Hub',type:'Infrastructure',group:'Mobility Specialist',
+   desc:'Development of a multi-modal transit node that integrates public transport, cycling, and pedestrian infrastructure in a single accessible location. Transit hubs reduce private vehicle dependency by making alternative modes competitive, generating active mobility and reducing motorized traffic.',
+   hint:'Consider the full mobility system effect: what happens to car use, walking, cycling, emissions, noise, and local economic activity when transit becomes genuinely accessible?'},
+  {id:'S18',name:'Smart Mobility Network',type:'Infrastructure',group:'Mobility Specialist',
+   desc:'Deployment of integrated digital mobility infrastructure including real-time routing, shared mobility platforms, and connected transport systems across the district. Smart mobility networks optimize modal substitution — shifting private vehicle trips to active and shared modes.',
+   hint:'Think about behavioral change through digital systems: desire to use alternatives, motorized traffic reduction, noise, emissions, and economic connectivity effects.'}
+];
+
+let step=0,responses={},clOpen={},sessionCode='';
+STRATEGIES.forEach(s=>{responses[s.id]=[]});
+CLUSTERS.forEach(c=>{clOpen[c.id]=true});
+
+document.getElementById('btn-start').addEventListener('click',startApp);
+document.getElementById('btn-back').addEventListener('click',()=>nav(-1));
+document.getElementById('btn-next').addEventListener('click',()=>nav(1));
+document.getElementById('btn-skip').addEventListener('click',()=>nav(1));
+
+function startApp(){
+  sessionCode=document.getElementById('inp-session').value.trim()||'unknown';
+  document.getElementById('intro').style.display='none';
+  document.getElementById('strategy').style.display='flex';
+  step=0; renderStep();
+}
+
+function renderStep(){
+  if(step>=STRATEGIES.length){showResults();return;}
+  const s=STRATEGIES[step];
+  document.getElementById('s-id').textContent=s.id;
+  document.getElementById('s-name').textContent=s.name;
+  document.getElementById('s-grp').textContent=s.group;
+  document.getElementById('s-desc').textContent=s.desc;
+  document.getElementById('s-hint').textContent=s.hint;
+  const pill=document.getElementById('s-type');
+  pill.textContent=s.type;
+  pill.className='tpill '+(s.type==='Behavioral'?'tbeh':s.type==='Spatial'?'tspa':'tinf');
+  document.getElementById('prog-fill').style.width=(step/STRATEGIES.length*100)+'%';
+  document.getElementById('step-ctr').textContent=step+' / '+STRATEGIES.length;
+  document.getElementById('btn-back').style.visibility=step===0?'hidden':'visible';
+  document.getElementById('btn-next').textContent=step===STRATEGIES.length-1?'Finish ✓':'Next strategy →';
+  renderClusters(s.id);
+  updateBadge(s.id);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function renderClusters(sid){
+  const con=document.getElementById('clusters');
+  con.innerHTML='';
+  CLUSTERS.forEach(c=>{
+    const open=clOpen[c.id];
+    const selN=responses[sid].filter(v=>c.vars.includes(v)).length;
+    const div=document.createElement('div');
+    div.className='cluster';
+    const head=document.createElement('div');
+    head.className='clhead';
+    head.innerHTML='<span class="cldot" style="background:'+c.color+'"></span>'+
+      '<span class="cllabel">'+c.label+'</span>'+
+      (selN>0?'<span class="clsel">'+selN+' selected</span>':'')+
+      '<span class="clcount">'+c.vars.length+' vars</span>'+
+      '<span class="clarrow'+(open?' open':'')+'">▾</span>';
+    head.addEventListener('click',()=>{clOpen[c.id]=!open;renderClusters(sid);});
+    div.appendChild(head);
+    if(open){
+      const wrap=document.createElement('div');
+      wrap.className='chips';
+      c.vars.forEach(v=>{
+        const sel=responses[sid].includes(v);
+        const chip=document.createElement('span');
+        chip.className='chip'+(sel?' sel':'');
+        chip.innerHTML='<span class="chk">✓</span> '+v;
+        chip.addEventListener('click',()=>toggleVar(sid,v));
+        wrap.appendChild(chip);
+      });
+      div.appendChild(wrap);
+    }
+    con.appendChild(div);
+  });
+}
+
+function toggleVar(sid,v){
+  const idx=responses[sid].indexOf(v);
+  if(idx===-1)responses[sid].push(v);
+  else responses[sid].splice(idx,1);
+  renderClusters(sid);
+  updateBadge(sid);
+}
+
+function updateBadge(sid){
+  const n=responses[sid].length;
+  document.getElementById('sel-badge').textContent=n+' variable'+(n!==1?'s':'')+' selected';
+}
+
+function nav(dir){step+=dir;if(step<0)step=0;renderStep();}
+
+function showResults(){
+  document.getElementById('strategy').style.display='none';
+  document.getElementById('prog-fill').style.width='100%';
+  document.getElementById('step-ctr').textContent='18 / 18';
+  document.getElementById('results').style.display='flex';
+
+  const grid=document.getElementById('res-grid');
+  grid.innerHTML='';
+  STRATEGIES.forEach(s=>{
+    const n=responses[s.id].length;
+    const card=document.createElement('div');
+    card.className='rc';
+    card.innerHTML='<div class="rc-name">'+s.name+'</div>'+
+      '<div class="rc-n">'+n+'</div>'+
+      '<div class="rc-tag">'+(n>0?responses[s.id].slice(0,2).join(', ')+(n>2?' +more':''):'None selected')+'</div>';
+    grid.appendChild(card);
+  });
+
+  // Build encoded payload
+  const payload={
+    s:sessionCode,
+    r:Object.fromEntries(Object.entries(responses).map(([k,v])=>[k,v.map(x=>ALL_VARS.indexOf(x))])),
+    t:Date.now()
+  };
+  const code=btoa(JSON.stringify(payload));
+
+  // Build prefilled Google Form URL
+  const formUrl=FORM_BASE_URL+
+    '?usp=pp_url'+
+    '&'+ENTRY_SESSION+'='+encodeURIComponent(sessionCode)+
+    '&'+ENTRY_RESPONSE+'='+encodeURIComponent(code);
+
+  const btn=document.getElementById('btn-submit-final');
+  btn.href=formUrl;
+  btn.addEventListener('click',()=>{
+    document.getElementById('sending-msg').style.display='block';
+  });
+
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
